@@ -1,0 +1,1 @@
+web: gunicorn lebenslauf_backend.wsgi

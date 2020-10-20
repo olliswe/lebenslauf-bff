@@ -4,6 +4,9 @@ from rest_framework.response import Response
 import requests
 from django.conf import settings
 from urllib.parse import parse_qsl
+from rest_framework import views
+from .serializers import UserSerializer
+from rest_framework import generics
 
 
 @api_view(["POST"])
@@ -26,3 +29,7 @@ def get_access_token(request):
 
 
 # todo: create /me endpoint
+class MeView(views.APIView):
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)

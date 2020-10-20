@@ -121,6 +121,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
         "drf_social_oauth2.authentication.SocialAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ),
     "DATETIME_FORMAT": "iso-8601",
 }
@@ -159,5 +160,6 @@ SOCIAL_AUTH_GITHUB_SECRET = env("SOCIAL_AUTH_GITHUB_SECRET")
 
 STATIC_URL = "/static/"
 
+# APPEND_SLASH = False
 
 django_heroku.settings(locals())

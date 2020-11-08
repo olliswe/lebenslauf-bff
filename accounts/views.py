@@ -28,7 +28,6 @@ def get_access_token(request):
     return Response({"error": "Unable to login"})
 
 
-# todo: create /me endpoint
 class MeView(views.APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)

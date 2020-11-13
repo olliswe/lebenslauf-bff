@@ -6,7 +6,6 @@ from django.conf import settings
 from urllib.parse import parse_qsl
 from rest_framework import views
 from .serializers import UserSerializer
-from rest_framework import generics
 
 
 @api_view(["POST"])

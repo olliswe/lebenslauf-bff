@@ -10,8 +10,8 @@ class CV(models.Model):
     location = models.TextField("Location")
     email = models.TextField("Email")
     phone = models.TextField("Phone")
-    homepage_url = models.TextField("Homepage URL")
-    linkedin_url = models.TextField("LinkedIn URL")
+    homepage_url = models.TextField("Homepage URL", null=True, blank=True)
+    linkedin_url = models.TextField("LinkedIn URL", null=True, blank=True)
 
     def __str__(self):
         return self.name

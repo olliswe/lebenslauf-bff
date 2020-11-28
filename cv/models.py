@@ -18,6 +18,10 @@ class CV(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def skills(self):
+        return Skill.objects.filter(cvskill__cv__id=self.id)
+
 
 class EducationEntry(models.Model):
     institution = models.TextField("Institution")
@@ -28,7 +32,9 @@ class EducationEntry(models.Model):
         "Description", max_length=20000, null=True, blank=True
     )
     current = models.BooleanField("Current", default=False)
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+    cv = models.ForeignKey(
+        CV, on_delete=models.CASCADE, related_name="education_entries"
+    )
 
 
 class ExperienceEntry(models.Model):
@@ -38,14 +44,18 @@ class ExperienceEntry(models.Model):
     end_date = models.DateField("End Date")
     current = models.BooleanField("Current", default=False)
     github_project_url = models.TextField("Github Project URL", null=True, blank=True)
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+    cv = models.ForeignKey(
+        CV, on_delete=models.CASCADE, related_name="experience_entries"
+    )
 
 
 class PersonalProject(models.Model):
     name = models.TextField("Name")
     description = models.TextField("Description", null=True, blank=True)
     github_project_url = models.TextField("Github Project URL", null=True, blank=True)
-    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
+    cv = models.ForeignKey(
+        CV, on_delete=models.CASCADE, related_name="personal_project_entries"
+    )
 
 
 class Skill(models.Model):

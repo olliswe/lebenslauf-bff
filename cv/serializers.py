@@ -1,6 +1,7 @@
 # todo: add Basic CV serializer for just getting top level CV data
 from rest_framework import serializers
 from .models import CV, EducationEntry, ExperienceEntry, PersonalProject, Skill
+from django.contrib.auth.models import User
 
 
 class ReadEducationEntrySerializer(serializers.ModelSerializer):
@@ -41,10 +42,24 @@ class ReadCVSerializer(serializers.ModelSerializer):
                 "skills",
             ]
         )
+        order_by = "-createdAt"
 
 
 class WriteCVSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(
+        many=False, read_only=False, queryset=User.objects.all()
+    )
+
     class Meta:
         model = CV
-        fields = [field.name for field in model._meta.fields]
-        fields.remove("id")
+        fields = [
+            "user",
+            "name",
+            "position",
+            "bio",
+            "location",
+            "email",
+            "phone",
+            "homepage_url",
+            "linkedin_url",
+        ]

@@ -22,6 +22,9 @@ class CV(models.Model):
     def skills(self):
         return Skill.objects.filter(cvskill__cv__id=self.id)
 
+    class Meta:
+        ordering = ["-updated_at"]
+
 
 class EducationEntry(models.Model):
     institution = models.TextField("Institution")

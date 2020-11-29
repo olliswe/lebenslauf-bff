@@ -42,7 +42,6 @@ class ReadCVSerializer(serializers.ModelSerializer):
                 "skills",
             ]
         )
-        order_by = "-createdAt"
 
 
 class WriteCVSerializer(serializers.ModelSerializer):
@@ -63,3 +62,9 @@ class WriteCVSerializer(serializers.ModelSerializer):
             "homepage_url",
             "linkedin_url",
         ]
+
+
+class WriteSkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ["name"]

@@ -1,9 +1,8 @@
-from rest_framework import viewsets, views
-from .serializers import ReadCVSerializer, WriteCVSerializer
-from .models import CV
+from rest_framework import views
 from rest_framework.response import Response
-from django.http import HttpResponse, JsonResponse
-from rest_framework.parsers import JSONParser
+
+from .models import CV, CVSkill, Skill
+from .serializers import ReadCVSerializer, WriteCVSerializer, WriteSkillSerializer
 
 
 class MyCV(views.APIView):
@@ -11,7 +10,7 @@ class MyCV(views.APIView):
         user = request.user
         user_cvs = CV.objects.filter(user=user)
         serializer = ReadCVSerializer(user_cvs, many=True)
-        return JsonResponse(serializer.data, status=200)
+        return Response(serializer.data, status=200)
 
     def post(self, request):
         user = request.user
@@ -28,10 +27,31 @@ class MyCV(views.APIView):
         ]:
             cv.pop(item, None)
         cv["user"] = user.pk
-        print(cv)
-        serializer = WriteCVSerializer(data=cv, many=False)
+        cv_serializer = WriteCVSerializer(data=cv, many=False)
         # todo: serialize all entries
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+        if cv_serializer.is_valid():
+            cv = cv_serializer.save()
+
+            # Handle Skills
+            skills_serializer = WriteSkillSerializer(data=skills, many=True)
+            if skills_serializer.is_valid():
+                validated_skills = skills_serializer.data
+                for skill in validated_skills:
+                    existing_skill = Skill.objects.filter(name=skill["name"]).first()
+                    if existing_skill:
+                        CVSkill.objects.create(cv=cv, skill=existing_skill)
+                    else:
+                        new_skill = Skill.objects.create(name=skill["name"])
+                        CVSkill.objects.create(cv=cv, skill=new_skill)
+            else:
+                cv.delete()
+                return Response(skills_serializer.errors, status=400)
+
+            # Handle Experience Entries
+
+            # Handle Personal Project Entries
+
+            # Handle Education Entries
+
+            return Response(cv_serializer.data, status=201)
+        return Response(cv_serializer.errors, status=400)

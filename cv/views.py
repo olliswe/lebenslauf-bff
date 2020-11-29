@@ -15,13 +15,22 @@ class MyCV(views.APIView):
 
     def post(self, request):
         user = request.user
-        data = request.data
-        cv = data.get("cv")
-        if cv is None:
-            return JsonResponse("cv not present in request", status=400)
+        cv = request.data
+        experience_entries = cv.get("experience_entries")
+        personal_project_entries = cv.get("personal_project_entries")
+        education_entries = cv.get("education_entries")
+        skills = cv.get("skills")
+        for item in [
+            "experience_entries",
+            "personal_project_entries",
+            "education_entries",
+            "skills",
+        ]:
+            cv.pop(item, None)
         cv["user"] = user.pk
         print(cv)
         serializer = WriteCVSerializer(data=cv, many=False)
+        # todo: serialize all entries
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)

@@ -2,7 +2,13 @@ from rest_framework import views
 from rest_framework.response import Response
 
 from .models import CV, CVSkill, Skill
-from .serializers import ReadCVSerializer, WriteCVSerializer, WriteSkillSerializer
+from .serializers import (
+    ReadCVSerializer,
+    WriteCVSerializer,
+    WriteSkillSerializer,
+    WriteExperienceEntriesSerializer,
+    WritePersonalProjectsSerializer,
+)
 
 
 class MyCV(views.APIView):
@@ -15,17 +21,10 @@ class MyCV(views.APIView):
     def post(self, request):
         user = request.user
         cv = request.data
-        experience_entries = cv.get("experience_entries")
-        personal_project_entries = cv.get("personal_project_entries")
-        education_entries = cv.get("education_entries")
-        skills = cv.get("skills")
-        for item in [
-            "experience_entries",
-            "personal_project_entries",
-            "education_entries",
-            "skills",
-        ]:
-            cv.pop(item, None)
+        experience_entries = cv.pop("experience_entries", None)
+        personal_project_entries = cv.pop("personal_project_entries", None)
+        education_entries = cv.pop("education_entries", None)
+        skills = cv.pop("skills", None)
         cv["user"] = user.pk
         cv_serializer = WriteCVSerializer(data=cv, many=False)
         # todo: serialize all entries
@@ -48,10 +47,21 @@ class MyCV(views.APIView):
                 return Response(skills_serializer.errors, status=400)
 
             # Handle Experience Entries
-
-            # Handle Personal Project Entries
+            parsed_experience_entries = []
+            for entry in experience_entries:
+                entry["cv"] = cv.pk
+                parsed_experience_entries.append(entry)
+            experience_entries_serializer = WriteExperienceEntriesSerializer(
+                data=parsed_experience_entries, many=True
+            )
+            if experience_entries_serializer.is_valid():
+                experience_entries_serializer.save()
+            else:
+                cv.delete()
+                return Response(experience_entries_serializer.errors, status=400)
 
             # Handle Education Entries
 
-            return Response(cv_serializer.data, status=201)
+            read_cv_serializer = ReadCVSerializer(cv, many=False)
+            return Response(read_cv_serializer.data, status=201)
         return Response(cv_serializer.errors, status=400)

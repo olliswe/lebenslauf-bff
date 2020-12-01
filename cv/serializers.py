@@ -30,6 +30,7 @@ class ReadSkillsSerializer(serializers.ModelSerializer):
 
 class ReadCVSerializer(serializers.ModelSerializer):
     skills = ReadSkillsSerializer(many=True)
+    experience_entries = ReadExperienceEntrySerializer(many=True)
 
     class Meta:
         model = CV
@@ -68,3 +69,23 @@ class WriteSkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = ["name"]
+
+
+class WriteExperienceEntriesSerializer(serializers.ModelSerializer):
+    cv = serializers.PrimaryKeyRelatedField(
+        many=False, read_only=False, queryset=CV.objects.all()
+    )
+
+    class Meta:
+        model = ExperienceEntry
+        fields = "__all__"
+
+
+class WritePersonalProjectsSerializer(serializers.ModelSerializer):
+    cv = serializers.PrimaryKeyRelatedField(
+        many=False, read_only=False, queryset=CV.objects.all()
+    )
+
+    class Meta:
+        model = PersonalProject
+        fields = "__all__"

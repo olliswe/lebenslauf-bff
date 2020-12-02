@@ -89,3 +89,13 @@ class WritePersonalProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalProject
         fields = "__all__"
+
+
+class WriteEducationEntriesSerializer(serializers.ModelSerializer):
+    cv = serializers.PrimaryKeyRelatedField(
+        many=False, read_only=False, queryset=CV.objects.all()
+    )
+
+    class Meta:
+        model = EducationEntry
+        fields = "__all__"

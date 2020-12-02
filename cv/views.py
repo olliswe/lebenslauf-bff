@@ -8,6 +8,7 @@ from .serializers import (
     WriteSkillSerializer,
     WriteExperienceEntriesSerializer,
     WritePersonalProjectsSerializer,
+    WriteEducationEntriesSerializer,
 )
 
 
@@ -75,6 +76,18 @@ class MyCV(views.APIView):
                 return Response(personal_projects_serializer.errors, status=400)
 
             # Handle Education Entries
+            parsed_education_entries = []
+            for entry in education_entries:
+                entry["cv"] = cv.pk
+                parsed_education_entries.append(entry)
+            education_entries_serializer = WriteEducationEntriesSerializer(
+                data=parsed_education_entries, many=True
+            )
+            if education_entries_serializer.is_valid():
+                education_entries_serializer.save()
+            else:
+                cv.delete()
+                return Response(education_entries_serializer.errors, status=400)
 
             read_cv_serializer = ReadCVSerializer(cv, many=False)
             return Response(read_cv_serializer.data, status=201)

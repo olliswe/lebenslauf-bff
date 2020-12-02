@@ -60,6 +60,20 @@ class MyCV(views.APIView):
                 cv.delete()
                 return Response(experience_entries_serializer.errors, status=400)
 
+            # Handle Personal Project Entries
+            parsed_personal_projects = []
+            for entry in personal_project_entries:
+                entry["cv"] = cv.pk
+                parsed_personal_projects.append(entry)
+            personal_projects_serializer = WritePersonalProjectsSerializer(
+                data=parsed_personal_projects, many=True
+            )
+            if personal_projects_serializer.is_valid():
+                personal_projects_serializer.save()
+            else:
+                cv.delete()
+                return Response(personal_projects_serializer.errors, status=400)
+
             # Handle Education Entries
 
             read_cv_serializer = ReadCVSerializer(cv, many=False)

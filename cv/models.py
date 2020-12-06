@@ -22,6 +22,9 @@ class CV(models.Model):
     def skills(self):
         return Skill.objects.filter(cvskill__cv__id=self.id)
 
+    class Meta:
+        ordering = ["-updated_at"]
+
 
 class EducationEntry(models.Model):
     institution = models.TextField("Institution")
@@ -40,8 +43,8 @@ class EducationEntry(models.Model):
 class ExperienceEntry(models.Model):
     role = models.TextField("Role")
     company = models.TextField("Company")
-    state_date = models.DateField("Start Date")
-    end_date = models.DateField("End Date")
+    start_date = models.DateField("Start Date")
+    end_date = models.DateField("End Date", null=True, blank=True)
     current = models.BooleanField("Current", default=False)
     github_project_url = models.TextField("Github Project URL", null=True, blank=True)
     cv = models.ForeignKey(

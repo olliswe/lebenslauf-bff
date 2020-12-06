@@ -28,7 +28,7 @@ class MyCV(views.APIView):
         skills = cv.pop("skills", None)
         cv["user"] = user.pk
         cv_serializer = WriteCVSerializer(data=cv, many=False)
-        # todo: serialize all entries
+        # todo: add skills to project, experience and education entries
         if cv_serializer.is_valid():
             cv = cv_serializer.save()
 

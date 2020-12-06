@@ -31,6 +31,8 @@ class ReadSkillsSerializer(serializers.ModelSerializer):
 class ReadCVSerializer(serializers.ModelSerializer):
     skills = ReadSkillsSerializer(many=True)
     experience_entries = ReadExperienceEntrySerializer(many=True)
+    personal_project_entries = ReadPersonalProjectSerializer(many=True)
+    education_entries = ReadEducationEntrySerializer(many=True)
 
     class Meta:
         model = CV

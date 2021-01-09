@@ -6,10 +6,21 @@
     <meta charset="UTF-8" />
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/cv_template.css' %}" />
+    <link
+      href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="paper">
-      {{ cv.name }}
+      <div class="center">
+        <div class="name mb1">
+          {{ cv.name }}
+        </div>
+        <div class="phone-and-address">
+          {{cv.location}} | {{ cv.phone }}
+        </div>
+      </div>
     </div>
   </body>
 </html>

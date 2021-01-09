@@ -25,9 +25,47 @@
 }
 
 
-.paper{
-    display: flex;
-    flex-direction: column;
-    font-family: Lato-Bold;
-    color:red
+.name{
+    color: #2b2b2b;
+    font-size: 20px;
+    font-family: Lato-Light;
+}
+
+.title {
+    color:#6a6a6a;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-family: Lato-Light;
+}
+
+.text {
+    color: #2b2b2b;
+    font-size:11px ;
+    font-family: Lato-Regular;
+}
+
+.company-name {
+    color: #2b2b2b;
+    font-size: 12px;
+    font-family: Lato-Regular;
+    text-transform: uppercase;
+}
+
+.role-name {
+    color: #2b2b2b;
+    font-size: 12px;
+    font-family: Lato-Light;
+    text-transform: uppercase;
+}
+
+.date-location {
+    color: #2b2b2b;
+    font-size: 11px;
+    font-family: Lato-Regular;
+}
+
+.phone-and-address {
+    color:#2b2b2b;
+    font-size: 12px;
+    font-family: Lato-Light;
 }

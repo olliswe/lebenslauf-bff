@@ -1,5 +1,7 @@
 from rest_framework import views
 from rest_framework.response import Response
+from django.shortcuts import render
+from .helpers import render_to_pdf
 
 from .models import CV, CVSkill, Skill
 from .serializers import (
@@ -92,3 +94,13 @@ class MyCV(views.APIView):
             read_cv_serializer = ReadCVSerializer(cv, many=False)
             return Response(read_cv_serializer.data, status=201)
         return Response(cv_serializer.errors, status=400)
+
+
+def show_cv_template(request):
+    cv = CV.objects.last()
+    return render(request, "cv_template.html", {"cv": cv})
+
+
+def download_cv_template(request):
+    cv = CV.objects.last()
+    return render_to_pdf("cv_template.html", {"cv": cv})

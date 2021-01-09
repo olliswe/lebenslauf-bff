@@ -102,5 +102,5 @@ def show_cv_template(request):
 
 
 def download_cv_template(request):
-    cv = CV.objects.last()
+    cv = CV.objects.first()
     return render_to_pdf("cv_template.html", {"cv": cv})

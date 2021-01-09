@@ -17,8 +17,24 @@
         <div class="name mb1">
           {{ cv.name }}
         </div>
-        <div class="phone-and-address">
+        <div class="phone-and-address mb1">
           {{cv.location}} | {{ cv.phone }}
+        </div>
+        <div class="divider"></div>
+      </div>
+      <div class="flex mt1">
+        <div class="col-4 mr2">
+          <div class="title">
+            About Me
+          </div>
+          <div class="text">
+            {{ cv.bio }}
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="title">
+            My work Experience
+          </div>
         </div>
       </div>
     </div>

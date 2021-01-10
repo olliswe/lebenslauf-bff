@@ -24,6 +24,25 @@
      /* change the margins as you want them to be. */
 }
 
+:root{
+    /* change default spacing in basecss*/
+    font-size: 10px;
+}
+
+ul {
+    padding: 0 0 0 10px;
+    list-style-type: '> ';
+    margin:0;
+}
+
+/*}*/
+
+li {
+    padding: 0;
+}
+
+
+
 
 .name{
     color: #2b2b2b;

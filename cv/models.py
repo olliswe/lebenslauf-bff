@@ -43,10 +43,11 @@ class EducationEntry(models.Model):
 class ExperienceEntry(models.Model):
     role = models.TextField("Role")
     company = models.TextField("Company")
+    location = models.TextField("Location")
     start_date = models.DateField("Start Date")
     end_date = models.DateField("End Date", null=True, blank=True)
     current = models.BooleanField("Current", default=False)
-    github_project_url = models.TextField("Github Project URL", null=True, blank=True)
+    description = models.TextField("Description", null=True, blank=True)
     cv = models.ForeignKey(
         CV, on_delete=models.CASCADE, related_name="experience_entries"
     )
@@ -55,6 +56,8 @@ class ExperienceEntry(models.Model):
 class PersonalProject(models.Model):
     name = models.TextField("Name")
     description = models.TextField("Description", null=True, blank=True)
+    start_date = models.DateField("Start Date", null=True, blank=True)
+    end_date = models.DateField("End Date", null=True, blank=True)
     github_project_url = models.TextField("Github Project URL", null=True, blank=True)
     cv = models.ForeignKey(
         CV, on_delete=models.CASCADE, related_name="personal_project_entries"

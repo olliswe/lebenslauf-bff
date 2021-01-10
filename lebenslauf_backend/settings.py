@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "drf_social_oauth2",
     "corsheaders",
     "rest_framework",
+    "markdownify",
     "cv",
     "accounts",
 ]

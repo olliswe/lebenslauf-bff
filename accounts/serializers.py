@@ -22,4 +22,4 @@ class UserSerializer(serializers.ModelSerializer):
         fields.append("user_profile")
 
 
-generate_ts("./generated-types/accounts.ts", context="account")
+# generate_ts("./generated-types/accounts.ts", context="account")

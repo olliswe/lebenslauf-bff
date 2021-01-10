@@ -114,4 +114,4 @@ class WriteEducationEntriesSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-generate_ts("./generated-types/cv.ts")
+# generate_ts("./generated-types/cv.ts")

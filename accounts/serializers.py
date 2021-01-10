@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 from django_typomatic import ts_interface, generate_ts
 
 
-@ts_interface()
+@ts_interface(context="account")
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ["subscription"]
 
 
-@ts_interface()
+@ts_interface(context="account")
 class UserSerializer(serializers.ModelSerializer):
     user_profile = UserProfileSerializer(many=False)
 
@@ -22,4 +22,4 @@ class UserSerializer(serializers.ModelSerializer):
         fields.append("user_profile")
 
 
-generate_ts("./generated-types/accounts.ts")
+generate_ts("./generated-types/accounts.ts", context="account")

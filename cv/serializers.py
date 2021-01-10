@@ -2,32 +2,38 @@
 from rest_framework import serializers
 from .models import CV, EducationEntry, ExperienceEntry, PersonalProject, Skill
 from django.contrib.auth.models import User
+from django_typomatic import ts_interface, generate_ts
 
 
+@ts_interface()
 class ReadEducationEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationEntry
         fields = "__all__"
 
 
+@ts_interface()
 class ReadExperienceEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperienceEntry
         fields = "__all__"
 
 
+@ts_interface()
 class ReadPersonalProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalProject
         fields = "__all__"
 
 
+@ts_interface()
 class ReadSkillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = "__all__"
 
 
+@ts_interface()
 class ReadCVSerializer(serializers.ModelSerializer):
     skills = ReadSkillsSerializer(many=True)
     experience_entries = ReadExperienceEntrySerializer(many=True)
@@ -47,6 +53,7 @@ class ReadCVSerializer(serializers.ModelSerializer):
         )
 
 
+@ts_interface()
 class WriteCVSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(
         many=False, read_only=False, queryset=User.objects.all()
@@ -67,12 +74,14 @@ class WriteCVSerializer(serializers.ModelSerializer):
         ]
 
 
+@ts_interface()
 class WriteSkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = ["name"]
 
 
+@ts_interface()
 class WriteExperienceEntriesSerializer(serializers.ModelSerializer):
     cv = serializers.PrimaryKeyRelatedField(
         many=False, read_only=False, queryset=CV.objects.all()
@@ -83,6 +92,7 @@ class WriteExperienceEntriesSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+@ts_interface()
 class WritePersonalProjectsSerializer(serializers.ModelSerializer):
     cv = serializers.PrimaryKeyRelatedField(
         many=False, read_only=False, queryset=CV.objects.all()
@@ -93,6 +103,7 @@ class WritePersonalProjectsSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+@ts_interface()
 class WriteEducationEntriesSerializer(serializers.ModelSerializer):
     cv = serializers.PrimaryKeyRelatedField(
         many=False, read_only=False, queryset=CV.objects.all()
@@ -101,3 +112,6 @@ class WriteEducationEntriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationEntry
         fields = "__all__"
+
+
+# generate_ts("./generated-types/cv.ts")

@@ -97,10 +97,10 @@ class MyCV(views.APIView):
 
 
 def show_cv_template(request):
-    cv = CV.objects.last()
+    cv = CV.objects.first()
     return render(request, "cv_template.html", {"cv": cv})
 
 
 def download_cv_template(request):
-    cv = CV.objects.last()
+    cv = CV.objects.first()
     return render_to_pdf("cv_template.html", {"cv": cv})

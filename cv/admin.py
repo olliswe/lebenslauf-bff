@@ -10,7 +10,22 @@ from .models import (
     CVSkill,
 )
 
-admin.site.register(CV)
+
+class ExperienceEntryInline(admin.StackedInline):
+    model = ExperienceEntry
+    extra = 0
+
+
+class PersonalProjectInline(admin.StackedInline):
+    model = PersonalProject
+    extra = 0
+
+
+class CVAdmin(admin.ModelAdmin):
+    inlines = [ExperienceEntryInline, PersonalProjectInline]
+
+
+admin.site.register(CV, CVAdmin)
 admin.site.register(EducationEntry)
 admin.site.register(ExperienceEntry)
 admin.site.register(PersonalProject)

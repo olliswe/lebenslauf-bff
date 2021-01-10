@@ -1,0 +1,17 @@
+{% load markdownify %}
+
+<div class="mt2">
+  <div class="flex">
+    <span class="company-name">{{ entry.company }}</span>
+    &nbsp;
+    <span class="role-name">
+      | {{entry.role}}
+    </span>
+  </div>
+  <div class="date-location mt1">
+    {{ entry.start_date }} - {% if entry.end_date %}{{ entry.end_date}} &nbsp;{% endif %}| {{ entry.location }}
+  </div>
+  <div class="text mt1">
+    {{ entry.description | markdownify }}
+  </div>
+</div>

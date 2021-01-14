@@ -1,22 +1,3 @@
-@font-face {
-    font-family: Lato-Regular;
-    src: url('../fonts/Lato-Regular.ttf');
-}
-
-@font-face {
-    font-family: Lato-Bold;
-    src: url('../fonts/Lato-Bold.ttf');
-}
-
-@font-face {
-    font-family: Lato-Light;
-    src: url('../fonts/Lato-Light.ttf');
-}
-
-@font-face {
-    font-family: Lato-Thin;
-    src: url('../fonts/Lato-Thin.ttf');
-}
 
 @page {
     size: A4;
@@ -27,6 +8,7 @@
 :root{
     /* change default spacing in basecss*/
     font-size: 10px;
+    size: A4;
 }
 
 ul {
@@ -42,51 +24,54 @@ li {
 }
 
 
+body {
+    font-family: Lato;
+}
 
 
 .name{
     color: #2b2b2b;
     font-size: 20px;
-    font-family: Lato-Light;
+    font-weight: 300;
 }
 
 .title {
     color:#6a6a6a;
     font-size: 16px;
     text-transform: uppercase;
-    font-family: Lato-Light;
+    font-weight: 300;
 }
 
 .text {
     color: #2b2b2b;
     font-size:11px ;
-    font-family: Lato-Regular;
+    font-weight: 400;
 }
 
 .company-name {
     color: #2b2b2b;
     font-size: 12px;
-    font-family: Lato-Regular;
+    font-weight: 400;
     text-transform: uppercase;
 }
 
 .role-name {
     color: #2b2b2b;
     font-size: 12px;
-    font-family: Lato-Light;
+    font-weight: 300;
     text-transform: uppercase;
 }
 
 .date-location {
     color: #2b2b2b;
     font-size: 11px;
-    font-family: Lato-Regular;
+    font-weight: 400;
 }
 
 .phone-and-address {
     color:#2b2b2b;
     font-size: 12px;
-    font-family: Lato-Light;
+    font-weight: 300;
 }
 
 .divider {

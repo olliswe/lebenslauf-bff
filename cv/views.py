@@ -91,6 +91,11 @@ class MyCV(views.APIView):
                 cv.delete()
                 return Response(education_entries_serializer.errors, status=400)
 
+            # delete oldest cv
+            oldest_cv = CV.objects.last()
+            if oldest_cv and oldest_cv.id != cv.id:
+                oldest_cv.delete()
+
             read_cv_serializer = ReadCVSerializer(cv, many=False)
             return Response(read_cv_serializer.data, status=201)
         return Response(cv_serializer.errors, status=400)
@@ -98,9 +103,15 @@ class MyCV(views.APIView):
 
 def show_cv_template(request):
     cv = CV.objects.first()
-    return render(request, "cv_template.html", {"cv": cv})
+    return render(
+        request,
+        "cv_template.html",
+        {"cv": cv, "public_url": request.build_absolute_uri("/")},
+    )
 
 
 def download_cv_template(request):
     cv = CV.objects.first()
-    return render_to_pdf("cv_template.html", {"cv": cv})
+    return render_to_pdf(
+        "cv_template.html", {"cv": cv, "public_url": request.build_absolute_uri("/")}
+    )
